@@ -35,56 +35,56 @@ public class UrlParams {
         return this;
     }
 
-    public <T extends Enum> UrlParams putToUrl(String name, T value) throws Exception {
+    public <T extends Enum> UrlParams putToUrl(String name, T value) throws BinanceApiException {
         if (value != null) {
             paramsMap.put(name, value.toString());
         }
         return this;
     }
 
-    public UrlParams putToUrl(String name, String value) throws Exception {
+    public UrlParams putToUrl(String name, String value) throws BinanceApiException {
         paramsMap.put(name, value);
         return this;
     }
 
-    public UrlParams putToUrl(String name, Date value, String format) throws Exception {
+    public UrlParams putToUrl(String name, Date value, String format) throws BinanceApiException {
         paramsMap.put(name, value, format);
         return this;
     }
 
-    public UrlParams putToUrl(String name, Integer value) throws Exception {
+    public UrlParams putToUrl(String name, Integer value) throws BinanceApiException {
         paramsMap.put(name, value);
         return this;
     }
 
-    public UrlParams putToUrl(String name, Long value) throws Exception {
+    public UrlParams putToUrl(String name, Long value) throws BinanceApiException {
         paramsMap.put(name, value);
         return this;
     }
 
-    public UrlParams putToUrl(String name, BigDecimal value) throws Exception {
+    public UrlParams putToUrl(String name, BigDecimal value) throws BinanceApiException {
         paramsMap.put(name, value);
         return this;
     }
 
-    public UrlParams putToPost(String name, String value) throws Exception {
+    public UrlParams putToPost(String name, String value) throws BinanceApiException {
         postBodyMap.put(name, value);
         return this;
     }
 
-    public <T extends Enum> UrlParams putToPost(String name, T value) throws Exception {
+    public <T extends Enum> UrlParams putToPost(String name, T value) throws BinanceApiException {
         if (value != null) {
             postBodyMap.put(name, value.toString());
         }
         return this;
     }
 
-    public UrlParams putToPost(String name, Date value, String format) throws Exception {
+    public UrlParams putToPost(String name, Date value, String format) throws BinanceApiException {
         postBodyMap.put(name, value, format);
         return this;
     }
 
-    public UrlParams putToPost(String name, Integer value) throws Exception {
+    public UrlParams putToPost(String name, Integer value) throws BinanceApiException {
         postBodyMap.put(name, value);
         return this;
     }
@@ -94,12 +94,12 @@ public class UrlParams {
         return this;
     }
 
-    public UrlParams putToPost(String name, Long value) throws Exception {
+    public UrlParams putToPost(String name, Long value) throws BinanceApiException {
         postBodyMap.put(name, value);
         return this;
     }
 
-    public UrlParams putToPost(String name, BigDecimal value) throws Exception {
+    public UrlParams putToPost(String name, BigDecimal value) throws BinanceApiException {
         postBodyMap.put(name, value);
         return this;
     }
@@ -167,7 +167,7 @@ public class UrlParams {
         final Map<String, String> map = new LinkedHashMap<>();
         final Map<String, List> stringListMap = new HashMap<>();
 
-        void put(String name, String value) throws Exception {
+        void put(String name, String value) throws BinanceApiException {
             if (name == null || "".equals(name)) {
                 throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR, "[URL] Key can not be null");
             }
@@ -179,20 +179,20 @@ public class UrlParams {
         }
 
 
-        void put(String name, Integer value) throws Exception {
+        void put(String name, Integer value) throws BinanceApiException {
             put(name, value != null ? Integer.toString(value) : null);
         }
 
-        void put(String name, Date value, String format) throws Exception {
+        void put(String name, Date value, String format) throws BinanceApiException {
             SimpleDateFormat dateFormatter = new SimpleDateFormat(format);
             put(name, value != null ? dateFormatter.format(value) : null);
         }
 
-        void put(String name, Long value) throws Exception {
+        void put(String name, Long value) throws BinanceApiException {
             put(name, value != null ? Long.toString(value) : null);
         }
 
-        void put(String name, BigDecimal value) throws Exception {
+        void put(String name, BigDecimal value) throws BinanceApiException {
             put(name, value != null ? value.toPlainString() : null);
         }
     }

@@ -1,5 +1,6 @@
 package com.williamdandrea.crypto.exchanges.futures.connector.java.utils;
 
+import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.constants.BinanceConstants;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.utils.enumerations.Exchange;
 
 import java.net.MalformedURLException;
@@ -9,7 +10,7 @@ import java.net.URL;
  * Factory class that manage the base url of each exchanges and verify that the transformation String -> URL is valid
  * @author D'Andréa William
  */
-public class RestApiInitialUrl {
+public class RestApiPrefixUrl {
 
     /** Prefix URL of the Exchange */
     private String url;
@@ -20,7 +21,7 @@ public class RestApiInitialUrl {
      * Initialize the class attribute url
      * @param exchange we work for (Binance / KuCoin / ByBit ...)
      */
-    public RestApiInitialUrl(Exchange exchange) {
+    public RestApiPrefixUrl(Exchange exchange) {
         this.exchange = exchange;
         this.setUrl();
     }
@@ -51,7 +52,7 @@ public class RestApiInitialUrl {
      */
     private String getGoodUrlFromExchange() {
         if (exchange.equals(Exchange.BINANCE))
-            this.url = "https://fapi.binance.com";
+            this.url = BinanceConstants.API_BASE_URL;
 
         return "";
     }
