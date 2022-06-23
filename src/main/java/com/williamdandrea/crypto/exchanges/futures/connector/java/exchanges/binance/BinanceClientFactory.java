@@ -1,5 +1,7 @@
 package com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance;
 
+import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.api.BinanceSyncRestClientImpl;
+
 /**
  * @author D'Andréa William
  */
@@ -28,7 +30,7 @@ public class BinanceClientFactory {
      * @return the BinanceSyncRestClient
      */
     public BinanceSyncRestClient newSyncRestClient() {
-        return null;
+        return new BinanceSyncRestClientImpl(this.apiKey, this.secretKey);
     }
 
     /**

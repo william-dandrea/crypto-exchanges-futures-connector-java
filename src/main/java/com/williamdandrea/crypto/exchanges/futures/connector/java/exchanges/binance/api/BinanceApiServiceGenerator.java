@@ -65,8 +65,7 @@ public class BinanceApiServiceGenerator {
      * Extracts and converts the response error body into an object.
      */
     public static BinanceApiError getBinanceApiError(Response<?> response) throws IOException, BinanceApiException {
-        return (BinanceApiError)retrofit.responseBodyConverter(BinanceApiError.class, new Annotation[0])
-                .convert(response.errorBody());
+        return (BinanceApiError) retrofit.responseBodyConverter(BinanceApiError.class, new Annotation[0]).convert(response.errorBody());
     }
 
 
