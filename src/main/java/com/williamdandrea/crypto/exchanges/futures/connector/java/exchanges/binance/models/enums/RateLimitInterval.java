@@ -5,5 +5,6 @@ package com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.bin
  */
 public enum RateLimitInterval {
 
-    MINUTE
+    MINUTE,
+    SECOND,
 }

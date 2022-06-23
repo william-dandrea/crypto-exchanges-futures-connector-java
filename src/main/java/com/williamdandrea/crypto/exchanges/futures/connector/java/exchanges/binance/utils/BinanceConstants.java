@@ -5,7 +5,7 @@ package com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.bin
  */
 public class BinanceConstants {
 
-    public static final String BASE_URL = "https://api.binance.com";
+    public static final String BASE_URL = "https://fapi.binance.com";
 
     /**
      * HTTP Header to be used for API-KEY authentication.

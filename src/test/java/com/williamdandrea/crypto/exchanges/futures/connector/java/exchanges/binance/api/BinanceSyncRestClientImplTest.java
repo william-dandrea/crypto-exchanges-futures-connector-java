@@ -32,6 +32,10 @@ class BinanceSyncRestClientImplTest {
         System.out.println(this.binanceSyncRestClient.getServerTime());
     }
 
+    @Test
+    void exhangeInfoTest() {
+        System.out.println(this.binanceSyncRestClient.getExchangeInformation());
+    }
 
 
 
