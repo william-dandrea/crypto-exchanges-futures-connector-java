@@ -38,8 +38,6 @@ class BinanceSyncRestClientImplTest {
     }
 
 
-
-
     @AfterEach
     void tearDown() {
     }

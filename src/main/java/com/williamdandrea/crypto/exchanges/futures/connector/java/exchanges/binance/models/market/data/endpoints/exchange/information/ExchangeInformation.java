@@ -28,7 +28,7 @@ public class ExchangeInformation {
     @JsonProperty
     private List<Asset> assets;
 
-    @JsonProperty @JsonIgnore
+    @JsonProperty
     private List<Symbol> symbols;
 
     @JsonProperty
