@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 /**
  * @author D'Andréa William
  */
-class MainTest {
+class BinanceMainTest {
 
     @BeforeEach
     void setUp() {
