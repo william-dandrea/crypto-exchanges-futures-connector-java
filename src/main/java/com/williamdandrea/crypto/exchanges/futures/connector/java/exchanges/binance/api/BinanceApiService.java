@@ -1,11 +1,14 @@
 package com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.api;
 
+import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.TradeList;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.orderbook.OrderBook;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.exchange.information.ExchangeInformation;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.ServerTime;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+
+import java.util.List;
 
 /**
  * @author D'Andréa William
@@ -24,4 +27,6 @@ public interface BinanceApiService {
     @GET("/fapi/v1/depth")
     Call<OrderBook> getOrderBook(@Query("symbol") String symbol, @Query("limit") Integer limit);
 
+    @GET("/fapi/v1/trades")
+    Call<List<TradeList>> getRecentTradeList(@Query("symbol")String symbol, @Query("limit")Integer limit);
 }

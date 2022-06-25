@@ -1,8 +1,11 @@
 package com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance;
 
+import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.TradeList;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.orderbook.OrderBook;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.exchange.information.ExchangeInformation;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.ServerTime;
+
+import java.util.List;
 
 /**
  * @author D'Andréa William
@@ -50,9 +53,25 @@ public interface BinanceSyncRestClient {
      *  https://binance-docs.github.io/apidocs/futures/en/#order-book
      *
      * @param symbol the ticker symbol (eg. BNBUSDT)
-     * @param limit depth of the orderbook ( Default 500; Valid limits:[5, 10, 20, 50, 100, 500, 1000] )
+     * @param limit - optional - depth of the orderbook ( Default 500; Valid limits:[5, 10, 20, 50, 100, 500, 1000] )
      */
     OrderBook getOrderBook(String symbol, Integer limit);
     OrderBook getOrderBook(String symbol);
+
+
+    /**
+     * Recent Trades List
+     * Get recent market trades. Market trades means trades filled in the order book. Only market trades will be
+     * returned, which means the insurance fund trades and ADL trades won't be returned.
+     *
+     * GET /fapi/v1/trades
+     *
+     * https://binance-docs.github.io/apidocs/futures/en/#recent-trades-list
+     *
+     * @param symbol the ticker symbol (eg. BNBUSDT)
+     * @param limit - optional - Default 500; max 1000. number of trades
+     */
+    List<TradeList> getRecentTradeList(String symbol, Integer limit);
+    List<TradeList> getRecentTradeList(String symbol);
 
 }
