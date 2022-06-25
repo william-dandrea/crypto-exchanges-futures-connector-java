@@ -33,7 +33,7 @@ class BinanceSyncRestClientImplTest {
     }
 
     @Test
-    void exhangeInfoTest() {
+    void exchangeInfoTest() {
         System.out.println(this.binanceSyncRestClient.getExchangeInformation());
     }
 

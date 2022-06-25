@@ -30,6 +30,10 @@ public abstract class Filter {
                 .append("filterType", filterType)
                 .build();
     }
+
+    public String getFilterType() {
+        return filterType;
+    }
 }
 
 

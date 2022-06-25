@@ -23,6 +23,18 @@ public class PercentPriceFilter extends Filter {
         this.multiplierDecimal = multiplierDecimal;
     }
 
+    public Double getMultiplierDown() {
+        return multiplierDown;
+    }
+
+    public Double getMultiplierUp() {
+        return multiplierUp;
+    }
+
+    public Double getMultiplierDecimal() {
+        return multiplierDecimal;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)

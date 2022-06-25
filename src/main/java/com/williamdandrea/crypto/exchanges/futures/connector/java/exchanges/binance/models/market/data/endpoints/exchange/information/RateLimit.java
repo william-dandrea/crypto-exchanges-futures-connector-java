@@ -15,7 +15,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class RateLimit {
 
-
     @JsonProperty
     private RateLimitInterval interval;
 
@@ -29,6 +28,22 @@ public class RateLimit {
     private RateLimitType rateLimitType;
 
 
+
+    public RateLimitInterval getInterval() {
+        return interval;
+    }
+
+    public Integer getIntervalNum() {
+        return intervalNum;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public RateLimitType getRateLimitType() {
+        return rateLimitType;
+    }
 
     @Override
     public String toString() {

@@ -1,5 +1,6 @@
 package com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance;
 
+import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.orderbook.OrderBook;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.exchange.information.ExchangeInformation;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.ServerTime;
 
@@ -28,7 +29,6 @@ public interface BinanceSyncRestClient {
      * Test connectivity to the Rest API and get the current server time.
      *
      * https://binance-docs.github.io/apidocs/futures/en/#check-server-time
-     * @return
      */
     ServerTime getServerTime();
 
@@ -40,4 +40,19 @@ public interface BinanceSyncRestClient {
      * https://binance-docs.github.io/apidocs/futures/en/#exchange-information
      */
     ExchangeInformation getExchangeInformation();
+
+
+    /**
+     *  Get Order Book of a symbol
+     *
+     *  GET /fapi/v1/depth
+     *
+     *  https://binance-docs.github.io/apidocs/futures/en/#order-book
+     *
+     * @param symbol the ticker symbol (eg. BNBUSDT)
+     * @param limit depth of the orderbook ( Default 500; Valid limits:[5, 10, 20, 50, 100, 500, 1000] )
+     */
+    OrderBook getOrderBook(String symbol, Integer limit);
+    OrderBook getOrderBook(String symbol);
+
 }

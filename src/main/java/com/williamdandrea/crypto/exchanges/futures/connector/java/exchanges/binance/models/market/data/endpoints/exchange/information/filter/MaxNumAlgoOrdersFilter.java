@@ -17,6 +17,10 @@ public class MaxNumAlgoOrdersFilter extends Filter {
         this.limit = limit;
     }
 
+    public Double getLimit() {
+        return limit;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)

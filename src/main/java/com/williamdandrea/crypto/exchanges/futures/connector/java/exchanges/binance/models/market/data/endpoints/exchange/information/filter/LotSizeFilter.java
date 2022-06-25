@@ -32,4 +32,16 @@ public class LotSizeFilter extends Filter {
                 .append("minQty", this.minQty)
                 .build();
     }
+
+    public Double getStepSize() {
+        return stepSize;
+    }
+
+    public Double getMaxQty() {
+        return maxQty;
+    }
+
+    public Double getMinQty() {
+        return minQty;
+    }
 }

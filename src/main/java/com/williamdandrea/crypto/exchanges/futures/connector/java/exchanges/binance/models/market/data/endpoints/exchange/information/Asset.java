@@ -9,14 +9,31 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class Asset {
 
-    @JsonProperty
-    private String asset;
 
-    @JsonProperty
-    private Boolean marginAvailable;
+    private final String asset;
+    private final Boolean marginAvailable;
+    private final Float autoAssetExchange;
 
-    @JsonProperty
-    private String autoAssetExchange;
+    public Asset(
+            @JsonProperty("asset") String asset,
+            @JsonProperty("marginAvailable") Boolean marginAvailable,
+            @JsonProperty("autoAssetExchange") String autoAssetExchange) {
+        this.asset = asset;
+        this.marginAvailable = marginAvailable;
+        this.autoAssetExchange = Float.valueOf(autoAssetExchange);
+    }
+
+    public String getAsset() {
+        return asset;
+    }
+
+    public Boolean getMarginAvailable() {
+        return marginAvailable;
+    }
+
+    public Float getAutoAssetExchange() {
+        return autoAssetExchange;
+    }
 
     @Override
     public String toString() {

@@ -24,6 +24,18 @@ public class MarketLotSizeFilter extends Filter {
         this.minQty = minQty;
     }
 
+    public Double getStepSize() {
+        return stepSize;
+    }
+
+    public Double getMaxQty() {
+        return maxQty;
+    }
+
+    public Double getMinQty() {
+        return minQty;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)

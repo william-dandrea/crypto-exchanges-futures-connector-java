@@ -16,6 +16,18 @@ public class PriceFilter extends Filter {
     @JsonProperty
     private Double tickSize;
 
+    public Double getMinPrice() {
+        return minPrice;
+    }
+
+    public Double getMaxPrice() {
+        return maxPrice;
+    }
+
+    public Double getTickSize() {
+        return tickSize;
+    }
+
     @JsonCreator
     public PriceFilter(String filterType, Double minPrice, Double maxPrice, Double tickSize) {
         super(filterType);

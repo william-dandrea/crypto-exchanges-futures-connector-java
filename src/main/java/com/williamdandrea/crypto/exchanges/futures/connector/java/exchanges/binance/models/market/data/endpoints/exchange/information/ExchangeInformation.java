@@ -34,6 +34,33 @@ public class ExchangeInformation {
     @JsonProperty
     private String timezone;
 
+    public List<String> getExchangeFilters() {
+        return exchangeFilters;
+    }
+
+    public List<RateLimit> getRateLimits() {
+        return rateLimits;
+    }
+
+    public String getFuturesType() {
+        return futuresType;
+    }
+
+    public Long getServerTime() {
+        return serverTime;
+    }
+
+    public List<Asset> getAssets() {
+        return assets;
+    }
+
+    public List<Symbol> getSymbols() {
+        return symbols;
+    }
+
+    public String getTimezone() {
+        return timezone;
+    }
 
     @Override
     public String toString() {

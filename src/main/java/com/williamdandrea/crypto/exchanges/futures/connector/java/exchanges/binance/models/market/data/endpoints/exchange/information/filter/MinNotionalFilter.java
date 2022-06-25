@@ -18,6 +18,10 @@ public class MinNotionalFilter extends Filter {
         this.notional = notional;
     }
 
+    public Double getNotional() {
+        return notional;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
