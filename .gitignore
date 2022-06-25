@@ -1,5 +1,19 @@
+# Eclipse
+.classpath
+.project
+.settings/
 
-.idea
+# Intellij
+.idea/
+*.iml
+*.iws
 
-/target/
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
+
+# Project
 .env
