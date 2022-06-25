@@ -2,6 +2,7 @@ package com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.bin
 
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.BinanceClientFactory;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.BinanceSyncRestClient;
+import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.exceptions.BinanceApiException;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.utils.Constants;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,6 +37,17 @@ class BinanceSyncRestClientImplTest {
     void exchangeInfoTest() {
         System.out.println(this.binanceSyncRestClient.getExchangeInformation());
     }
+
+    @Test
+    void orderBookTest() {
+        System.out.println(this.binanceSyncRestClient.getOrderBook("BTCUSDT", 5));
+
+        assertThrows(BinanceApiException.class, () -> {
+            this.binanceSyncRestClient.getOrderBook("BTCUSDT", 7);
+        });
+    }
+
+
 
 
     @AfterEach
