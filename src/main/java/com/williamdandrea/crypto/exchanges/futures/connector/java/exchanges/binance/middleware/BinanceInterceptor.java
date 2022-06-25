@@ -32,6 +32,7 @@ public class BinanceInterceptor implements Interceptor {
         boolean isApiKeyRequired = initialRequest.header(BinanceConstants.ENDPOINT_SECURITY_TYPE_APIKEY) != null;
         boolean isSignatureRequired = initialRequest.header(BinanceConstants.ENDPOINT_SECURITY_TYPE_SIGNED) != null;
 
+
         // Reset the headers associated to the apiKey or signature
         responseRequestBuilder.removeHeader(BinanceConstants.ENDPOINT_SECURITY_TYPE_APIKEY);
         responseRequestBuilder.removeHeader(BinanceConstants.ENDPOINT_SECURITY_TYPE_SIGNED);
@@ -46,11 +47,10 @@ public class BinanceInterceptor implements Interceptor {
             String payload = initialRequest.url().query();
             if (!StringUtils.isEmpty(payload)) {
                 String signature = HmacSHA256SignatureManager.sign(payload, secretKey);
-                HttpUrl signedUrl = initialRequest.url().newBuilder().addQueryParameter("signature", signature).build();
+                HttpUrl signedUrl = initialRequest.url().newBuilder().addQueryParameter(BinanceConstants.SIGNATURE_HEADER, signature).build();
                 responseRequestBuilder.url(signedUrl);
             }
         }
-
 
         return chain.proceed(responseRequestBuilder.build());
     }

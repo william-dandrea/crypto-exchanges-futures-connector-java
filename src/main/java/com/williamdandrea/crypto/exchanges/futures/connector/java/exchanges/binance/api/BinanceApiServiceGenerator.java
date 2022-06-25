@@ -35,6 +35,7 @@ public class BinanceApiServiceGenerator {
     public static <S> S createService(Class<S> serviceClass, String apiKey, String secret) {
         if (!StringUtils.isEmpty(apiKey) && !StringUtils.isEmpty(secret)) {
             BinanceInterceptor interceptor = new BinanceInterceptor(apiKey, secret);
+
             if (!httpClient.interceptors().contains(interceptor)) {
                 httpClient.addInterceptor(interceptor);
                 builder.client(httpClient.build());
@@ -54,7 +55,7 @@ public class BinanceApiServiceGenerator {
                 return response.body();
             } else {
                 BinanceApiError apiError = getBinanceApiError(response);
-                throw new BinanceApiException(apiError);
+                throw new BinanceApiException(apiError.toString());
             }
         } catch (IOException e) {
             throw new BinanceApiException(e);

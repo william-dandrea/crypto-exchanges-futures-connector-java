@@ -25,6 +25,8 @@ public class BinanceSyncRestClientImpl implements BinanceSyncRestClient {
         this.binanceApiService = createService(BinanceApiService.class, apiKey, secret);
     }
 
+
+
     @Override
     public void ping() {
         executeSync(binanceApiService.ping());
@@ -41,12 +43,12 @@ public class BinanceSyncRestClientImpl implements BinanceSyncRestClient {
     }
 
     @Override
-    public OrderBook getOrderBook(String symbol) {
-        return executeSync(binanceApiService.getOrderBook(symbol, null));
-    }
-
-    @Override
     public OrderBook getOrderBook(String symbol, Integer limit) {
+
+        if (limit == null) {
+            return executeSync(binanceApiService.getOrderBook(symbol, null));
+        }
+
         if (!Arrays.asList(new Integer[] {5, 10, 20, 50, 100, 500, 1000}).contains(limit)) {
             throw new BinanceApiRequestParametersException("Limit must be one of this value : [5, 10, 20, 50, 100, 500, 1000]");
         }
@@ -57,6 +59,10 @@ public class BinanceSyncRestClientImpl implements BinanceSyncRestClient {
     @Override
     public List<TradeList> getRecentTradeList(String symbol, Integer limit) {
 
+        if (limit == null) {
+            return executeSync(binanceApiService.getRecentTradeList(symbol, null));
+        }
+
         if (limit <= 0 || limit > 1000) {
             throw new BinanceApiRequestParametersException("Parameter 'limit' must be between [1;1000]");
         }
@@ -64,8 +70,18 @@ public class BinanceSyncRestClientImpl implements BinanceSyncRestClient {
         return executeSync(binanceApiService.getRecentTradeList(symbol, limit));
     }
 
+
     @Override
-    public List<TradeList> getRecentTradeList(String symbol) {
-        return executeSync(binanceApiService.getRecentTradeList(symbol, null));
+    public List<TradeList> getOldTradeLookup(String symbol, Integer limit, Long fromId) {
+
+        if (limit == null) {
+            return executeSync(binanceApiService.getOldTradeLookup(symbol, null, fromId));
+        }
+
+        if (limit <= 0 || limit > 1000) {
+            throw new BinanceApiRequestParametersException("Parameter 'limit' must be between [1;1000]");
+        }
+
+        return executeSync(binanceApiService.getOldTradeLookup(symbol, limit, fromId));
     }
 }

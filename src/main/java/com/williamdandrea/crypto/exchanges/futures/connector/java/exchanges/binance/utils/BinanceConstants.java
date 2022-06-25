@@ -13,6 +13,11 @@ public class BinanceConstants {
     public static final String API_KEY_HEADER = "X-MBX-APIKEY";
 
     /**
+     * HTTP Header to be used for signature.
+     */
+    public static final String SIGNATURE_HEADER = "signature";
+
+    /**
      * Decorator to indicate that an endpoint requires an API key.
      */
     public static final String ENDPOINT_SECURITY_TYPE_APIKEY = "APIKEY";

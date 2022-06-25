@@ -4,8 +4,11 @@ import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.bina
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.orderbook.OrderBook;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.exchange.information.ExchangeInformation;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.ServerTime;
+import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.utils.BinanceConstants;
+import com.williamdandrea.crypto.exchanges.futures.connector.java.utils.Constants;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
 import java.util.List;
@@ -29,4 +32,8 @@ public interface BinanceApiService {
 
     @GET("/fapi/v1/trades")
     Call<List<TradeList>> getRecentTradeList(@Query("symbol")String symbol, @Query("limit")Integer limit);
+
+    @Headers(BinanceConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER)
+    @GET("/fapi/v1/historicalTrades")
+    Call<List<TradeList>> getOldTradeLookup(@Query("symbol")String symbol, @Query("limit")Integer limit, @Query("fromId")Long fromId);
 }

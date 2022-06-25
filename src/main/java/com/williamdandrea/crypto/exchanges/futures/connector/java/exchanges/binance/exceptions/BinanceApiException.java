@@ -11,14 +11,6 @@ public class BinanceApiException extends RuntimeException {
     /** Error message from binance */
     private BinanceApiError error;
 
-    public BinanceApiException(BinanceApiError error) {
-        this.error = error;
-    }
-
-    public BinanceApiException() {
-        super();
-    }
-
     public BinanceApiException(String message) {
         super(message);
     }
@@ -29,10 +21,6 @@ public class BinanceApiException extends RuntimeException {
 
     public BinanceApiException(Throwable cause) {
         super(cause);
-    }
-
-    public BinanceApiException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
     }
 
     public BinanceApiError getError() {

@@ -42,6 +42,7 @@ class BinanceSyncRestClientImplTest {
     @Test
     void orderBookTest() {
         System.out.println(this.binanceSyncRestClient.getOrderBook("BTCUSDT", 5));
+        System.out.println(this.binanceSyncRestClient.getOrderBook("BTCUSDT", null));
 
         assertThrows(BinanceApiRequestParametersException.class, () -> {
             this.binanceSyncRestClient.getOrderBook("BTCUSDT", 7);
@@ -50,12 +51,12 @@ class BinanceSyncRestClientImplTest {
 
     @Test
     void orderBookOneParameterTest() {
-        System.out.println(this.binanceSyncRestClient.getOrderBook("BTCUSDT"));
+        System.out.println(this.binanceSyncRestClient.getOrderBook("BTCUSDT", null));
     }
 
     @Test
     void recentTradeListOneParameterTest() {
-        System.out.println(this.binanceSyncRestClient.getRecentTradeList("BTCUSDT"));
+        System.out.println(this.binanceSyncRestClient.getRecentTradeList("BTCUSDT", null));
     }
 
     @Test
@@ -69,6 +70,27 @@ class BinanceSyncRestClientImplTest {
         assertThrows(BinanceApiRequestParametersException.class, () -> {
             this.binanceSyncRestClient.getRecentTradeList("BTCUSDT", 1001);
         });
+    }
+
+    @Test
+    void oldTradeLookupTest() {
+
+        System.out.println(this.binanceSyncRestClient.getOldTradeLookup("BTCUSDT", null, null));
+        System.out.println(this.binanceSyncRestClient.getOldTradeLookup("BTCUSDT", 5, null));
+
+
+        assertThrows(BinanceApiRequestParametersException.class, () -> {
+            this.binanceSyncRestClient.getOldTradeLookup("BTCUSDT", 0, null);
+        });
+
+        assertThrows(BinanceApiRequestParametersException.class, () -> {
+            this.binanceSyncRestClient.getOldTradeLookup("BTCUSDT", 1001, null);
+        });
+    }
+
+    @Test
+    void oldTradeLookupWithIdTest() {
+        System.out.println(this.binanceSyncRestClient.getOldTradeLookup("BTCUSDT", null, 100000000000L));
     }
 
 
