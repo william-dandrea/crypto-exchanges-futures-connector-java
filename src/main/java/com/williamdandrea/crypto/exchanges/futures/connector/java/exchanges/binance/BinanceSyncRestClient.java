@@ -1,6 +1,8 @@
 package com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance;
 
+import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.enums.CandlestickChartInterval;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.AggregateTradeList;
+import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.CandlestickBinance;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.TradeList;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.orderbook.OrderBook;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.exchange.information.ExchangeInformation;
@@ -108,6 +110,7 @@ public interface BinanceSyncRestClient {
 
 
     /**
+     * Compressed/Aggregate Trades List
      *
      * Get compressed, aggregate market trades. Market trades that fill in 100ms with the same price and the same taking
      * side will have the quantity aggregated.
@@ -120,6 +123,8 @@ public interface BinanceSyncRestClient {
      * GET /fapi/v1/aggTrades
      * Weight: 20
      *
+     * https://binance-docs.github.io/apidocs/futures/en/#compressed-aggregate-trades-list
+     *
      * @param symbol the ticker symbol (eg. BNBUSDT)
      * @param fromId - optional (-> replace by null) - ID to get aggregate trades from INCLUSIVE.
      * @param startTime - optional (-> replace by null) - Timestamp in ms to get aggregate trades from INCLUSIVE.
@@ -127,5 +132,29 @@ public interface BinanceSyncRestClient {
      * @param limit - optional (-> replace by null) - Default 500; max 1000.
      */
     List<AggregateTradeList> getCompressedAggregateTradesList(@NotNull String symbol, @Nullable Long fromId, @Nullable Long startTime, @Nullable Long endTime, @Nullable Integer limit);
+
+
+    /**
+     * Kline/Candlestick Data
+     *
+     * Kline/candlestick bars for a symbol. Klines are uniquely identified by their open time.
+     *  - If startTime and endTime are not sent, the most recent klines are returned.
+     *
+     * GET /fapi/v1/klines
+     * Limit [1;100[        -> Weight = 1
+     * Limit [100;500[      -> Weight = 2
+     * Limit [500;1000[     -> Weight = 5
+     * Limit [1000;1500]    -> Weight = 10
+     *
+     *
+     * https://binance-docs.github.io/apidocs/futures/en/#kline-candlestick-data
+     *
+     * @param symbol the ticker symbol (eg. BNBUSDT)
+     * @param interval of the candlestick
+     * @param startTime - optional (-> replace by null) - Timestamp in ms for the first candle
+     * @param endTime - optional (-> replace by null) - Timestamp in ms for the last candle
+     * @param limit - optional (-> replace by null) - Default 500; max 1500.
+     */
+    List<CandlestickBinance> getCandlestickData(@NotNull String symbol, @NotNull CandlestickChartInterval interval, @Nullable Long startTime, @Nullable Long endTime, @Nullable Integer limit);
 
 }

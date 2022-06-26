@@ -2,7 +2,9 @@ package com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.bin
 
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.BinanceSyncRestClient;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.exceptions.BinanceApiRequestParametersException;
+import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.enums.CandlestickChartInterval;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.AggregateTradeList;
+import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.CandlestickBinance;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.TradeList;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.orderbook.OrderBook;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.exchange.information.ExchangeInformation;
@@ -104,6 +106,25 @@ public class BinanceSyncRestClientImpl implements BinanceSyncRestClient {
         }
 
         return executeSync(binanceApiService.getCompressedAggregateTradesList(symbol, fromId, startTime, endTime, limit));
+    }
+
+    @Override
+    public List<CandlestickBinance> getCandlestickData(@NotNull String symbol, @NotNull CandlestickChartInterval interval, @Nullable Long startTime, @Nullable Long endTime, @Nullable Integer limit) {
+
+        // Limit : Default 500; max 1500.
+        if (limit != null) {
+            if (limit <= 0 || limit > 1500) {
+                throw new BinanceApiRequestParametersException("Parameter 'limit' must be between [1;1000]");
+            }
+        }
+
+        if (startTime != null && endTime != null) {
+            if (startTime > endTime) {
+                throw new BinanceApiRequestParametersException("startTime need to be greater than endTime");
+            }
+        }
+
+        return executeSync(binanceApiService.getCandlestickData(symbol, interval.getValue(), startTime, endTime, limit));
     }
 
 

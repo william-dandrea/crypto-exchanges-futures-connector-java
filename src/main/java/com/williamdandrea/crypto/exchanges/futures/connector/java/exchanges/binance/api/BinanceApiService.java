@@ -1,6 +1,8 @@
 package com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.api;
 
+import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.enums.CandlestickChartInterval;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.AggregateTradeList;
+import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.CandlestickBinance;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.TradeList;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.orderbook.OrderBook;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.exchange.information.ExchangeInformation;
@@ -34,12 +36,17 @@ public interface BinanceApiService {
     Call<OrderBook> getOrderBook(@Query("symbol") String symbol, @Query("limit") Integer limit);
 
     @GET("/fapi/v1/trades")
-    Call<List<TradeList>> getRecentTradeList(@Query("symbol")String symbol, @Query("limit")Integer limit);
+    Call<List<TradeList>> getRecentTradeList(@Query("symbol") String symbol, @Query("limit") Integer limit);
 
     @Headers(BinanceConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER)
     @GET("/fapi/v1/historicalTrades")
-    Call<List<TradeList>> getOldTradeLookup(@Query("symbol")String symbol, @Query("limit")Integer limit, @Query("fromId")Long fromId);
+    Call<List<TradeList>> getOldTradeLookup(@Query("symbol") String symbol, @Query("limit") Integer limit, @Query("fromId") Long fromId);
 
     @GET("/fapi/v1/aggTrades")
-    Call<List<AggregateTradeList>> getCompressedAggregateTradesList(@Query("symbol")String symbol, @Query("fromId") Long fromId, @Query("startTime") Long startTime, @Query("endTime") Long endTime, @Query("limit") Integer limit);
+    Call<List<AggregateTradeList>> getCompressedAggregateTradesList(@Query("symbol") String symbol, @Query("fromId") Long fromId, @Query("startTime") Long startTime, @Query("endTime") Long endTime, @Query("limit") Integer limit);
+
+    @GET("/fapi/v1/klines")
+    Call<List<CandlestickBinance>> getCandlestickData(@Query("symbol") String symbol, @Query("interval") String interval, @Query("startTime") Long startTime, @Query("endTime") Long endTime, @Query("limit") Integer limit);
+
+
 }
