@@ -14,4 +14,11 @@ public class Constants {
     public static String BINANCE_SECRET_KEY = dotenv.get("BINANCE_SECRET_KEY");
 
 
+    /**
+     * Utils
+     */
+
+    public static final Long MS_IN_ONE_DAY = Long.valueOf(24 * 60 * 60 * 1000);
+
+
 }

@@ -1,9 +1,12 @@
 package com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance;
 
+import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.AggregateTradeList;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.TradeList;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.orderbook.OrderBook;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.exchange.information.ExchangeInformation;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.ServerTime;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -61,11 +64,10 @@ public interface BinanceSyncRestClient {
      *      | --------------------------|
      *
      *  https://binance-docs.github.io/apidocs/futures/en/#order-book
-     *
-     * @param symbol the ticker symbol (eg. BNBUSDT)
+     *  @param symbol the ticker symbol (eg. BNBUSDT)
      * @param limit - optional (-> replace by null) - depth of the orderbook ( Default 500; Valid limits:[5, 10, 20, 50, 100, 500, 1000] )
      */
-    OrderBook getOrderBook(String symbol, Integer limit);
+    OrderBook getOrderBook(@NotNull String symbol, @Nullable Integer limit);
 
 
     /**
@@ -83,7 +85,7 @@ public interface BinanceSyncRestClient {
      * @param symbol the ticker symbol (eg. BNBUSDT)
      * @param limit - optional (-> replace by null) - Default 500; max 1000. number of trades
      */
-    List<TradeList> getRecentTradeList(String symbol, Integer limit);
+    List<TradeList> getRecentTradeList(@NotNull String symbol, @Nullable Integer limit);
 
 
     /**
@@ -102,6 +104,28 @@ public interface BinanceSyncRestClient {
      * @param limit  - optional (-> replace by null) - Default 500; max 1000. number of trades
      * @param fromId - optional (-> replace by null) - TradeId to fetch from. Default gets most recent trades.
      */
-    List<TradeList> getOldTradeLookup(String symbol, Integer limit, Long fromId);
+    List<TradeList> getOldTradeLookup(@NotNull String symbol, @Nullable Integer limit, @Nullable Long fromId);
+
+
+    /**
+     *
+     * Get compressed, aggregate market trades. Market trades that fill in 100ms with the same price and the same taking
+     * side will have the quantity aggregated.
+     *
+     *   -  If both startTime and endTime are sent, time between startTime and endTime must be less than 1 hour.
+     *   -  If fromId, startTime, and endTime are not sent, the most recent aggregate trades will be returned.
+     *   -  Only market trades will be aggregated and returned, which means the insurance fund trades and ADL
+     *      trades won't be aggregated.
+     *
+     * GET /fapi/v1/aggTrades
+     * Weight: 20
+     *
+     * @param symbol the ticker symbol (eg. BNBUSDT)
+     * @param fromId - optional (-> replace by null) - ID to get aggregate trades from INCLUSIVE.
+     * @param startTime - optional (-> replace by null) - Timestamp in ms to get aggregate trades from INCLUSIVE.
+     * @param endTime - optional (-> replace by null) - Timestamp in ms to get aggregate trades until INCLUSIVE.
+     * @param limit - optional (-> replace by null) - Default 500; max 1000.
+     */
+    List<AggregateTradeList> getCompressedAggregateTradesList(@NotNull String symbol, @Nullable Long fromId, @Nullable Long startTime, @Nullable Long endTime, @Nullable Integer limit);
 
 }

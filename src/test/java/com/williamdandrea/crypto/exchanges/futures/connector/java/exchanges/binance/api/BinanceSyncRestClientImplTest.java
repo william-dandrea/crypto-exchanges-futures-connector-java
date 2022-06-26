@@ -9,6 +9,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Calendar;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -91,6 +93,24 @@ class BinanceSyncRestClientImplTest {
     @Test
     void oldTradeLookupWithIdTest() {
         System.out.println(this.binanceSyncRestClient.getOldTradeLookup("BTCUSDT", null, 100000000000L));
+    }
+
+
+    @Test
+    void compressedAggregateTradesListTest() {
+        System.out.println(this.binanceSyncRestClient.getCompressedAggregateTradesList("BTCUSDT", null, null, null, null));
+
+        assertThrows(BinanceApiRequestParametersException.class, () -> {
+            this.binanceSyncRestClient.getCompressedAggregateTradesList("BTCUSDT", null, null, null, 1001);
+        });
+
+        assertThrows(BinanceApiRequestParametersException.class, () -> {
+            this.binanceSyncRestClient.getCompressedAggregateTradesList("BTCUSDT", null, Calendar.getInstance().getTimeInMillis() + 20, Calendar.getInstance().getTimeInMillis(), null);
+        });
+
+        assertThrows(BinanceApiRequestParametersException.class, () -> {
+            this.binanceSyncRestClient.getCompressedAggregateTradesList("BTCUSDT", null, Calendar.getInstance().getTimeInMillis(), Calendar.getInstance().getTimeInMillis() + Constants.MS_IN_ONE_DAY + 1, null);
+        });
     }
 
 
