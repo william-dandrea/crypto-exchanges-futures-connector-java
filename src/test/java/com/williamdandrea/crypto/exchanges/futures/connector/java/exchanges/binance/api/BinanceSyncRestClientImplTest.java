@@ -5,6 +5,7 @@ import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.bina
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.exceptions.BinanceApiException;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.exceptions.BinanceApiRequestParametersException;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.enums.CandlestickChartInterval;
+import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.enums.ContractType;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.utils.Constants;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -117,7 +118,15 @@ class BinanceSyncRestClientImplTest {
     @Test
     void getCandlestickDataTest() {
         System.out.println(this.binanceSyncRestClient.getCandlestickData("BTCUSDT", CandlestickChartInterval.ONE_DAY, null, null, null));
+    }
 
+    @Test
+    void getContinuousCandlestickDataTest() {
+        System.out.println(this.binanceSyncRestClient.getContinuousContractCandlestickData("BTCUSDT", ContractType.PERPETUAL, CandlestickChartInterval.ONE_DAY, null, null, null));
+
+        assertThrows(BinanceApiRequestParametersException.class, () -> {
+            this.binanceSyncRestClient.getContinuousContractCandlestickData("BTCUSDT", ContractType.NEXT_MONTH, CandlestickChartInterval.ONE_DAY, null, null, null);
+        });
 
     }
 

@@ -1,6 +1,7 @@
 package com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance;
 
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.enums.CandlestickChartInterval;
+import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.enums.ContractType;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.AggregateTradeList;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.CandlestickBinance;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.TradeList;
@@ -156,5 +157,32 @@ public interface BinanceSyncRestClient {
      * @param limit - optional (-> replace by null) - Default 500; max 1500.
      */
     List<CandlestickBinance> getCandlestickData(@NotNull String symbol, @NotNull CandlestickChartInterval interval, @Nullable Long startTime, @Nullable Long endTime, @Nullable Integer limit);
+
+
+    /** Continuous Contract Kline/Candlestick Data
+     *
+     * Kline/candlestick bars for a specific contract type.
+     * Klines are uniquely identified by their open time.
+     *
+     *  -  If startTime and endTime are not sent, the most recent klines are returned.
+     *  -  Contract type: PERPETUAL / CURRENT_QUARTER / NEXT_QUARTER
+     *
+     *
+     * GET /fapi/v1/continuousKlines
+     * Limit [1;100[        -> Weight = 1
+     *      * Limit [100;500[      -> Weight = 2
+     *      * Limit [500;1000[     -> Weight = 5
+     *      * Limit [1000;1500]    -> Weight = 10
+     *
+     * https://binance-docs.github.io/apidocs/futures/en/#continuous-contract-kline-candlestick-data
+     *
+     * @param symbol the ticker symbol (eg. BNBUSDT)
+     * @param contractType PERPETUAL / CURRENT_QUARTER / NEXT_QUARTER
+     * @param interval of the candlestick
+     * @param startTime - optional (-> replace by null) - Timestamp in ms for the first candle
+     * @param endTime - optional (-> replace by null) - Timestamp in ms for the last candle
+     * @param limit - optional (-> replace by null) - Default 500; max 1500.
+     */
+    List<CandlestickBinance> getContinuousContractCandlestickData(@NotNull String symbol, @NotNull ContractType contractType,@NotNull CandlestickChartInterval interval, @Nullable Long startTime, @Nullable Long endTime, @Nullable Integer limit);
 
 }

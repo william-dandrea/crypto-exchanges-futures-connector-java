@@ -3,6 +3,7 @@ package com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.bin
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.BinanceSyncRestClient;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.exceptions.BinanceApiRequestParametersException;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.enums.CandlestickChartInterval;
+import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.enums.ContractType;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.AggregateTradeList;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.CandlestickBinance;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.TradeList;
@@ -127,5 +128,27 @@ public class BinanceSyncRestClientImpl implements BinanceSyncRestClient {
         return executeSync(binanceApiService.getCandlestickData(symbol, interval.getValue(), startTime, endTime, limit));
     }
 
+    @Override
+    public List<CandlestickBinance> getContinuousContractCandlestickData(@NotNull String symbol, @NotNull ContractType contractType, @NotNull CandlestickChartInterval interval, @Nullable Long startTime, @Nullable Long endTime, @Nullable Integer limit) {
 
+        // Limit : Default 500; max 1500.
+        if (limit != null) {
+            if (limit <= 0 || limit > 1500) {
+                throw new BinanceApiRequestParametersException("Parameter 'limit' must be between [1;1000]");
+            }
+        }
+
+        if (startTime != null && endTime != null) {
+            if (startTime > endTime) {
+                throw new BinanceApiRequestParametersException("startTime need to be greater than endTime");
+            }
+        }
+
+        if (contractType != ContractType.PERPETUAL && contractType != ContractType.CURRENT_QUARTER && contractType != ContractType.NEXT_QUARTER) {
+            throw new BinanceApiRequestParametersException("contractType need to be PERPETUAL or CURRENT_QUARTER or NEXT_QUARTER");
+        }
+
+
+        return executeSync(binanceApiService.getContinuousContractCandlestickData(symbol, contractType, interval.getValue(), startTime, endTime, limit));
+    }
 }

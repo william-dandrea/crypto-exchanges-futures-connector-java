@@ -1,6 +1,7 @@
 package com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.api;
 
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.enums.CandlestickChartInterval;
+import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.enums.ContractType;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.AggregateTradeList;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.CandlestickBinance;
 import com.williamdandrea.crypto.exchanges.futures.connector.java.exchanges.binance.models.market.data.endpoints.TradeList;
@@ -47,6 +48,9 @@ public interface BinanceApiService {
 
     @GET("/fapi/v1/klines")
     Call<List<CandlestickBinance>> getCandlestickData(@Query("symbol") String symbol, @Query("interval") String interval, @Query("startTime") Long startTime, @Query("endTime") Long endTime, @Query("limit") Integer limit);
+
+    @GET("/fapi/v1/continuousKlines")
+    Call<List<CandlestickBinance>> getContinuousContractCandlestickData(@Query("pair") String symbol, @Query("contractType") ContractType contractType, @Query("interval") String interval, @Query("startTime") Long startTime, @Query("endTime") Long endTime, @Query("limit") Integer limit);
 
 
 }
